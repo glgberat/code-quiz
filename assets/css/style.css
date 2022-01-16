@@ -4,7 +4,7 @@ margin: 15px;
 }
 
 :root {
-    --primary: #630e8a;
+    --primary: #4d2161;
     --secondary:#d441c8;
 
 }
@@ -40,7 +40,7 @@ float: right;
    height: 100%;
 }
 
-.container h1{
+.container h1,h3{
     text-align: center;
     font-size:4em;
 
@@ -68,7 +68,7 @@ background-color: var(--secondary);
 cursor: pointer;
 }
 
-li button {
+.buttonChoice {
     margin: 0 auto;
     background-color: var(--primary);
     color: white;
@@ -76,9 +76,32 @@ li button {
     font-size: 25px;
     width: 45%;
     padding: 11px;
+    text-align: left;
 }
 
-li button:hover {
+ .buttonChoice:hover {
     background-color: var(--secondary);
     cursor: pointer;
     }
+
+ol {
+    text-align: left;
+        list-style: none;
+        counter-reset: olCounter;
+}
+      
+li {
+        counter-increment: olCounter;
+}
+      
+li button::before {
+        content: counter(olCounter) ". ";
+}
+
+#questions h2{
+
+    text-align: left;
+    margin-left: 70px;
+    margin-bottom: 15px;
+    font-size: 25pt;
+}

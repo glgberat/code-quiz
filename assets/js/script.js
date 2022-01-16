@@ -6,8 +6,9 @@ var Checkpoint;
 var NewdivEl;
 var counter = 75;
 var intervalid=0;
+var questionIndex=0;
 
-const multiplechoice =  [
+var multiplechoice =  [
     {
         title: "Commonly used data types DO NOT include:",
         choices : ["strings", "booleans", "alerts", "numbers"],
@@ -40,10 +41,7 @@ const multiplechoice =  [
 ];
 
 
-function displayQuestions (){
-
-
-}
+function displayQuestions (){}
 
 function IsItCorrect (event) {
 var para=document.createElement("p");
@@ -51,20 +49,19 @@ var buttonChoice=event.target;
 var horline=document.createElement("hr");
 NewdivEl.appendChild(horline);
 
-if (buttonChoice.textContent==multiplechoice[0].answer) {
-NewdivEl.appendChild(horline);
+if (buttonChoice.textContent==multiplechoice[questionIndex].answer) {
+    
 var node=document.createTextNode("Correct!");
 para.appendChild(node);
 NewdivEl.appendChild(para);
 }
 
 else {
+    counter-=15;
     var node=document.createTextNode("Wrong!");
     para.appendChild(node);
     NewdivEl.appendChild(para);
-}
-
-}
+}}
 
 
 
@@ -72,14 +69,13 @@ else {
 function start(){
     while(intervalid==0) {
         
-
     QuestionsEl.remove();
   NewdivEl = document.createElement("div");
    WrapperEl.appendChild(NewdivEl);
    NewdivEl.className="container";
    NewdivEl.setAttribute("id", "questions");
    var QuestionHl=document.createElement("h2");
-   QuestionHl.textContent=multiplechoice[0].title;
+   QuestionHl.textContent=multiplechoice[questionIndex].title;
    NewdivEl.appendChild(QuestionHl);
 
    // <ul> list
@@ -87,7 +83,7 @@ function start(){
    var MultiplechoiceEl=document.createElement("ol");
    NewdivEl.appendChild(MultiplechoiceEl);
    
-   multiplechoice[0].choices.forEach(function (q) {
+   multiplechoice[questionIndex].choices.forEach(function (q) {
     var ListEl=document.createElement("li");
     MultiplechoiceEl.appendChild(ListEl);
     var MultipleChoices=document.createElement("button");

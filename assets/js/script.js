@@ -2,6 +2,10 @@ var TimerEl = document.querySelector("#start");
 var WrapperEl=document.getElementById('wrapper-div');
 var QuestionsEl=document.getElementById('questions');
 var QuestionHl;
+var Checkpoint;
+var NewdivEl;
+var counter = 75;
+var intervalid=0;
 
 const multiplechoice =  [
     {
@@ -36,13 +40,41 @@ const multiplechoice =  [
 ];
 
 
+function displayQuestions (){
+
+
+}
+
+function IsItCorrect (event) {
+var para=document.createElement("p");
+var buttonChoice=event.target;
+var horline=document.createElement("hr");
+NewdivEl.appendChild(horline);
+
+if (buttonChoice.textContent==multiplechoice[0].answer) {
+NewdivEl.appendChild(horline);
+var node=document.createTextNode("Correct!");
+para.appendChild(node);
+NewdivEl.appendChild(para);
+}
+
+else {
+    var node=document.createTextNode("Wrong!");
+    para.appendChild(node);
+    NewdivEl.appendChild(para);
+}
+
+}
 
 
 
 
 function start(){
+    while(intervalid==0) {
+        
+
     QuestionsEl.remove();
-  var NewdivEl = document.createElement("div");
+  NewdivEl = document.createElement("div");
    WrapperEl.appendChild(NewdivEl);
    NewdivEl.className="container";
    NewdivEl.setAttribute("id", "questions");
@@ -62,29 +94,33 @@ function start(){
     MultipleChoices.className="buttonChoice";
     MultipleChoices.textContent=q;
     ListEl.appendChild(MultipleChoices);
+
    })
 
 
+NewdivEl.addEventListener("click", (IsItCorrect));
 
-  
 
-   
-  
 
-   //QuestionsEl.appendChild(QuestionsTitleEl);
-    var counter = 75;
-    setInterval(function() {
+    intervalid=setInterval(function() {
+        console.log(intervalid);
       if (counter >= 0) {
         document.getElementById('countdown').innerHTML ="Time: " + counter;
       }
-      if (counter === -1) {
+      if (counter == -1) {
         
-          clearInterval(counter);
+          clearInterval(intervalid);
       } counter--;
     }, 1000);
+
+}
 }
 
-    TimerEl.addEventListener("click", start);
+
+
+
+
+TimerEl.addEventListener("click", start);
 
     
 

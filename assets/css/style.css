@@ -6,6 +6,7 @@ margin: 15px;
 :root {
     --primary: #4d2161;
     --secondary:#d441c8;
+    --third:#a5a1a1;
 
 }
 
@@ -46,9 +47,20 @@ float: right;
 
 }
 
-.container p {
+
+
+div p{
+    text-align: left;
+    color: var(--third);
+    font-style: italic;
+    font-size: 25px;
+}
+
+#intro {
     font-size: 1.5em;
     text-align: center;
+    font-style: normal;
+    color: black;
     
 }
 
@@ -104,4 +116,9 @@ li button::before {
     margin-left: 70px;
     margin-bottom: 15px;
     font-size: 25pt;
+}
+
+hr {
+border: 1px solid var(--third);
+
 }

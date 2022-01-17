@@ -117,6 +117,3 @@ NewdivEl.addEventListener("click", (IsItCorrect));
 
 
 TimerEl.addEventListener("click", start);
-
-    
-

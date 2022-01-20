@@ -42,6 +42,47 @@ var multiplechoice =  [
 
 ];
 
+function quizOver()
+{
+    clearInterval(intervalid);
+    NewdivEl.remove();
+
+    NewdivEl = document.createElement("div");
+    WrapperEl.appendChild(NewdivEl);
+    NewdivEl.className="container";
+    NewdivEl.setAttribute("id", "questions");
+    var QuestionHl=document.createElement("h2");
+    QuestionHl.textContent="All done!";
+    NewdivEl.appendChild(QuestionHl);
+
+
+
+    var createLabel = document.createElement("label");
+    createLabel.setAttribute("id", "createLabel");
+    createLabel.textContent = "Enter your initials: ";
+
+    NewdivEl.appendChild(createLabel);
+
+    // input
+    var createInput = document.createElement("input");
+    createInput.setAttribute("type", "text");
+    createInput.setAttribute("id", "initials");
+    createInput.textContent = "";
+
+    NewdivEl.appendChild(createInput);
+
+    // submit
+    var createSubmit = document.createElement("button");
+    createSubmit.setAttribute("type", "submit");
+    createSubmit.setAttribute("id", "Submit");
+    createSubmit.textContent = "Submit";
+
+    NewdivEl.appendChild(createSubmit);
+
+
+}
+
+
 
 function displayQuestions (){
 
@@ -90,9 +131,16 @@ else {
 }
 questionIndex++;
 
-if (multiplechoice[questionIndex] === multiplechoice.length) {
-   console.log("it is over")
-  } else {  setTimeout(function() {  NewdivEl.remove();
+if (questionIndex === multiplechoice.length) {
+    setTimeout(function() {  
+        quizOver();
+       }, 1500);
+   
+  } 
+  
+  else { 
+      
+    setTimeout(function() {  NewdivEl.remove();
  displayQuestions();
 }, 1500);
    
@@ -109,15 +157,18 @@ function start(){
     displayQuestions();
 
     intervalid=setInterval(function() {
-        console.log(intervalid);
+       
       if (counter >= 0) {
         document.getElementById('countdown').innerHTML ="Time: " + counter;
       }
       if (counter == -1) {
         
           clearInterval(intervalid);
+          quizOver();
       } counter--;
     }, 1000);
 }
+
+
 
 TimerEl.addEventListener("click", start);

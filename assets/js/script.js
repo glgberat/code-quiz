@@ -41,7 +41,30 @@ var multiplechoice =  [
 ];
 
 
-function displayQuestions (){}
+function displayQuestions (){
+
+    NewdivEl = document.createElement("div");
+    WrapperEl.appendChild(NewdivEl);
+    NewdivEl.className="container";
+    NewdivEl.setAttribute("id", "questions");
+    var QuestionHl=document.createElement("h2");
+    QuestionHl.textContent=multiplechoice[questionIndex].title;
+    NewdivEl.appendChild(QuestionHl);
+    var MultiplechoiceEl=document.createElement("ol");
+    NewdivEl.appendChild(MultiplechoiceEl);
+    
+    multiplechoice[questionIndex].choices.forEach(function (q) {
+     var ListEl=document.createElement("li");
+     MultiplechoiceEl.appendChild(ListEl);
+     var MultipleChoices=document.createElement("button");
+     MultipleChoices.className="buttonChoice";
+     MultipleChoices.textContent=q;
+     ListEl.appendChild(MultipleChoices);
+     NewdivEl.addEventListener("click", (IsItCorrect));
+ })
+
+
+}
 
 function IsItCorrect (event) {
 var para=document.createElement("p");
@@ -61,42 +84,24 @@ else {
     var node=document.createTextNode("Wrong!");
     para.appendChild(node);
     NewdivEl.appendChild(para);
-}}
+}
+questionIndex++;
+if (multiplechoice[questionIndex] === multiplechoice.length) {
+   console.log("it is over")
+  } else {
+      NewdivEl.remove();
+    displayQuestions();
+  }
+
+}
 
 
 
 
 function start(){
-    while(intervalid==0) {
         
     QuestionsEl.remove();
-  NewdivEl = document.createElement("div");
-   WrapperEl.appendChild(NewdivEl);
-   NewdivEl.className="container";
-   NewdivEl.setAttribute("id", "questions");
-   var QuestionHl=document.createElement("h2");
-   QuestionHl.textContent=multiplechoice[questionIndex].title;
-   NewdivEl.appendChild(QuestionHl);
-
-   // <ul> list
-
-   var MultiplechoiceEl=document.createElement("ol");
-   NewdivEl.appendChild(MultiplechoiceEl);
-   
-   multiplechoice[questionIndex].choices.forEach(function (q) {
-    var ListEl=document.createElement("li");
-    MultiplechoiceEl.appendChild(ListEl);
-    var MultipleChoices=document.createElement("button");
-    MultipleChoices.className="buttonChoice";
-    MultipleChoices.textContent=q;
-    ListEl.appendChild(MultipleChoices);
-
-   })
-
-
-NewdivEl.addEventListener("click", (IsItCorrect));
-
-
+    displayQuestions();
 
     intervalid=setInterval(function() {
         console.log(intervalid);
@@ -108,12 +113,6 @@ NewdivEl.addEventListener("click", (IsItCorrect));
           clearInterval(intervalid);
       } counter--;
     }, 1000);
-
 }
-}
-
-
-
-
 
 TimerEl.addEventListener("click", start);

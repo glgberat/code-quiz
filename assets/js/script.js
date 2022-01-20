@@ -7,6 +7,8 @@ var NewdivEl;
 var counter = 75;
 var intervalid=0;
 var questionIndex=0;
+var node;
+var horline;
 
 var multiplechoice =  [
     {
@@ -67,30 +69,33 @@ function displayQuestions (){
 }
 
 function IsItCorrect (event) {
-var para=document.createElement("p");
 var buttonChoice=event.target;
+var para=document.createElement("p");
 var horline=document.createElement("hr");
 NewdivEl.appendChild(horline);
 
 if (buttonChoice.textContent==multiplechoice[questionIndex].answer) {
-    
-var node=document.createTextNode("Correct!");
+     
+node=document.createTextNode("Correct!");
 para.appendChild(node);
 NewdivEl.appendChild(para);
+
 }
 
 else {
     counter-=15;
-    var node=document.createTextNode("Wrong!");
+    node=document.createTextNode("Wrong!");
     para.appendChild(node);
     NewdivEl.appendChild(para);
 }
 questionIndex++;
+
 if (multiplechoice[questionIndex] === multiplechoice.length) {
    console.log("it is over")
-  } else {
-      NewdivEl.remove();
-    displayQuestions();
+  } else {  setTimeout(function() {  NewdivEl.remove();
+ displayQuestions();
+}, 1500);
+   
   }
 
 }

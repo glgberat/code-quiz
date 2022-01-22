@@ -12,10 +12,10 @@ This application generates timed coding quiz with multiple-choice questions. Thi
 https://glgberat.github.io/code-quiz/
 
 ## Screenshots
-![Code-Quiz](https://github.com/glgberat.io/code-quiz/screenshots0.png)
-![Code-Quiz](https://github.com/glgberat.io/code-quiz/screenshots1.png)
-![Code-Quiz](https://github.com/glgberat.io/code-quiz/screenshots2.png)
-![Code-Quiz](https://github.com/glgberat.io/code-quiz/screenshots3.png)
+![Code-Quiz](https://glgberat.github.io/code-quiz/screenshots0.png)
+![Code-Quiz](https://glgberat.github.io/code-quiz/screenshots1.png)
+![Code-Quiz](https://glgberat.github.io/code-quiz/screenshots2.png)
+![Code-Quiz](https://glgberat.github.io/code-quiz/screenshots3.png)
 
 
 ## Contribution

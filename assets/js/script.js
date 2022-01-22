@@ -1,10 +1,12 @@
 var TimerEl = document.querySelector("#start");
 var WrapperEl=document.getElementById('wrapper-div');
 var QuestionsEl=document.getElementById('questions');
+createSubmit=document.querySelector("#start");
+var createInput=document.createElement("input");
 var QuestionHl;
 var Checkpoint;
 var NewdivEl;
-var counter = 75;
+var counter = 100;
 var intervalid=0;
 var questionIndex=0;
 var node;
@@ -42,50 +44,13 @@ var multiplechoice =  [
 
 ];
 
-function quizOver()
-{
-    clearInterval(intervalid);
-    NewdivEl.remove();
 
-    NewdivEl = document.createElement("div");
-    WrapperEl.appendChild(NewdivEl);
-    NewdivEl.className="container";
-    NewdivEl.setAttribute("id", "questions");
-    var QuestionHl=document.createElement("h2");
-    QuestionHl.textContent="All done!";
-    NewdivEl.appendChild(QuestionHl);
-
-
-
-    var createLabel = document.createElement("label");
-    createLabel.setAttribute("id", "createLabel");
-    createLabel.textContent = "Enter your initials: ";
-
-    NewdivEl.appendChild(createLabel);
-
-    // input
-    var createInput = document.createElement("input");
-    createInput.setAttribute("type", "text");
-    createInput.setAttribute("id", "initials");
-    createInput.textContent = "";
-
-    NewdivEl.appendChild(createInput);
-
-    // submit
-    var createSubmit = document.createElement("button");
-    createSubmit.setAttribute("type", "submit");
-    createSubmit.setAttribute("id", "Submit");
-    createSubmit.textContent = "Submit";
-
-    NewdivEl.appendChild(createSubmit);
-
-
-}
-
-
-
+// Funtion to render questions
 function displayQuestions (){
 
+  if(counter!=0)
+  {
+    //DOM Elements 
     NewdivEl = document.createElement("div");
     WrapperEl.appendChild(NewdivEl);
     NewdivEl.className="container";
@@ -96,6 +61,7 @@ function displayQuestions (){
     var MultiplechoiceEl=document.createElement("ol");
     NewdivEl.appendChild(MultiplechoiceEl);
     
+    //Creating List of buttons for multiple choice
     multiplechoice[questionIndex].choices.forEach(function (q) {
      var ListEl=document.createElement("li");
      MultiplechoiceEl.appendChild(ListEl);
@@ -105,15 +71,29 @@ function displayQuestions (){
      ListEl.appendChild(MultipleChoices);
      NewdivEl.addEventListener("click", (IsItCorrect));
  })
-
+  }
+else{
+  NewdivEl.remove();
+          quizOver();
 
 }
+}
 
+//comparing user's selected answer 
 function IsItCorrect (event) {
+  if(counter<=0) 
+ {
+  NewdivEl.remove();
+   quizOver();
+
+ }
+
 var buttonChoice=event.target;
 var para=document.createElement("p");
 var horline=document.createElement("hr");
 NewdivEl.appendChild(horline);
+
+
 
 if (buttonChoice.textContent==multiplechoice[questionIndex].answer) {
      
@@ -124,33 +104,37 @@ NewdivEl.appendChild(para);
 }
 
 else {
-    counter-=15;
+    counter-=15; //penalty deduction from timer
     node=document.createTextNode("Wrong!");
     para.appendChild(node);
     NewdivEl.appendChild(para);
+
 }
+
 questionIndex++;
 
 if (questionIndex === multiplechoice.length) {
     setTimeout(function() {  
+        NewdivEl.remove();
         quizOver();
        }, 1500);
    
   } 
   
-  else { 
+else { 
       
     setTimeout(function() {  NewdivEl.remove();
  displayQuestions();
 }, 1500);
    
-  }
+     }
 
 }
 
+ 
 
 
-
+//Starting Quiz 
 function start(){
         
     QuestionsEl.remove();
@@ -161,14 +145,106 @@ function start(){
       if (counter >= 0) {
         document.getElementById('countdown').innerHTML ="Time: " + counter;
       }
-      if (counter == -1) {
-        
+      if (counter < 0) {
+        document.getElementById('countdown').innerHTML ="Time: " + 0;
           clearInterval(intervalid);
+          NewdivEl.remove();
           quizOver();
+          
+          counter=-1;
       } counter--;
     }, 1000);
 }
 
+function Highscore() {
+    // get value of input box
+    var initials = createInput.value.toUpperCase();
+  
+    if (initials !== "") {
+      // get saved scores from localstorage, or if not any, set to empty array
+      var highscores =
+        JSON.parse(window.localStorage.getItem("highscores")) || [];
+  
+      // format new score object for current user
+      var newScore = {
+        score: counter,
+        initials: initials
+      };
+  
+      // save to localstorage
+      highscores.push(newScore);
+      window.localStorage.setItem("highscores", JSON.stringify(highscores));
+  
+      // redirect to next page
+      window.location.href = "score.html";
+    }
+  }
+  
+  
+//End of Quiz
+function quizOver()
+{
 
+  NewdivEl.remove();
+    clearInterval(intervalid);
+
+    NewdivEl = document.createElement("div");
+    WrapperEl.appendChild(NewdivEl);
+    NewdivEl.className="container";
+    NewdivEl.setAttribute("id", "questions");
+    var QuestionHl=document.createElement("h2");
+    QuestionHl.textContent="All done!";
+    NewdivEl.appendChild(QuestionHl);
+
+    // show final score
+  var score=counter+1;
+  if(score<0) {
+
+    score=0;
+  }
+  
+  var finalScoreEl = document.createElement('P');
+  finalScoreEl.setAttribute("class", "finalscr");
+  finalScoreEl.textContent ="Your final score is " + score +".";
+  NewdivEl.appendChild(finalScoreEl);
+
+
+
+    var createLabel = document.createElement("label");
+    createLabel.setAttribute("id", "createLabel");
+    createLabel.textContent = "Enter initials:";
+
+    NewdivEl.appendChild(createLabel);
+
+    // input
+    createInput.setAttribute("type", "text");
+    createInput.setAttribute("id", "initials");
+    createInput.textContent = "";
+
+    NewdivEl.appendChild(createInput);
+
+    // submit
+    createSubmit = document.createElement("button");
+    createSubmit.setAttribute("type", "submit");
+    createSubmit.setAttribute("id", "submit");
+    //createSubmit.className="labelinitials"
+    createSubmit.textContent = "Submit";
+
+    NewdivEl.appendChild(createSubmit);
+
+  createSubmit.addEventListener("click",Highscore);
+
+
+
+
+}
+
+
+
+
+
+
+//Starting Quiz with Button click
 
 TimerEl.addEventListener("click", start);
+ 
